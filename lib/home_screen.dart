@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:gemini_ai/features/chat_history/chat_history.dart';
-import 'package:gemini_ai/features/chat_screen/chat_screen.dart';
-import 'package:gemini_ai/features/profile_screen/profile_screen.dart';
+import 'package:gemini_ai/features/chat_history/ui/chat_history.dart';
+import 'package:gemini_ai/features/chat_screen/ui/chat_screen.dart';
+import 'package:gemini_ai/features/profile_screen/ui/profile_screen.dart';
 
 class MyHomePage extends StatefulWidget {
   const MyHomePage({super.key});
