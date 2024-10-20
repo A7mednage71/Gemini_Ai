@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:gemini_ai/home_screen.dart';
 
 void main() {
+  WidgetsFlutterBinding.ensureInitialized();
   runApp(const GeminiAiApp());
 }
 
@@ -18,14 +20,5 @@ class GeminiAiApp extends StatelessWidget {
       ),
       home: const MyHomePage(),
     );
-  }
-}
-
-class MyHomePage extends StatelessWidget {
-  const MyHomePage({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return const Scaffold();
   }
 }
