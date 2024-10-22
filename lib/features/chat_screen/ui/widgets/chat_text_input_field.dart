@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:gemini_ai/features/chat_screen/ui/provider/chat_provider.dart';
 
@@ -27,6 +29,23 @@ class _ChatTextInputFieldState extends State<ChatTextInputField> {
     textController.dispose();
     focusNode.dispose();
     super.dispose();
+  }
+
+  Future<void> sendMessage({required bool isTextOnly}) async {
+    if (textController.text.isNotEmpty) {
+      try {
+        log("Message: ${textController.text}");
+        widget.chatProvider.sendMessageToGemini(
+          message: textController.text,
+          isTextOnly: isTextOnly,
+        );
+      } on Exception catch (e) {
+        log("Error: $e");
+      } finally {
+        textController.clear();
+        focusNode.unfocus();
+      }
+    }
   }
 
   @override
@@ -59,7 +78,9 @@ class _ChatTextInputFieldState extends State<ChatTextInputField> {
             ),
           ),
           InkWell(
-            onTap: () {},
+            onTap: () async {
+              await sendMessage(isTextOnly: true);
+            },
             child: Container(
               padding: const EdgeInsets.all(8),
               decoration: BoxDecoration(
