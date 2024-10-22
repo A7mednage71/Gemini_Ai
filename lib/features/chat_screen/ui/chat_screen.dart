@@ -3,6 +3,7 @@ import 'package:gemini_ai/features/chat_screen/data/models/message_model.dart';
 import 'package:gemini_ai/features/chat_screen/ui/provider/chat_provider.dart';
 import 'package:gemini_ai/features/chat_screen/ui/widgets/assistant_message.dart';
 import 'package:gemini_ai/features/chat_screen/ui/widgets/chat_text_input_field.dart';
+import 'package:gemini_ai/features/chat_screen/ui/widgets/no_messages_in_chat.dart';
 import 'package:gemini_ai/features/chat_screen/ui/widgets/user_message.dart';
 import 'package:provider/provider.dart';
 
@@ -32,7 +33,7 @@ class ChatScreen extends StatelessWidget {
                                 : AssistantMessage(message: message);
                           },
                         )
-                      : const Center(child: Text("No Messages Yet")),
+                      : const NoChatMessages(),
                 ),
                 ChatTextInputField(chatProvider: chatProvider),
                 const SizedBox(height: 10),
