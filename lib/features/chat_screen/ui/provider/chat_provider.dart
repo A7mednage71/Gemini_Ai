@@ -103,15 +103,19 @@ class ChatProvider extends ChangeNotifier {
     // get chat id
     String chatId = getChatId();
     // get chat history
-    List<Content> history = await getChatConversation(chatId: chatId);
+    List<Content> history = [];
+    history = await getChatConversation(chatId: chatId);
 
     // get images urls
     List<String> imagesUrls = await getImagesUrls(isTextOnly: isTextOnly);
 
+    // get message id
+    String messageId = const Uuid().v4();
+
     // create new message
     MessageModel newMessage = MessageModel(
       message: StringBuffer(message),
-      messageId: '',
+      messageId: messageId,
       role: Role.user,
       chatId: chatId,
       imagesUrls: imagesUrls,
@@ -120,12 +124,11 @@ class ChatProvider extends ChangeNotifier {
 
     // add message to chat history
     _inChatMessages.add(newMessage);
+    notifyListeners();
     // change chat id if it is  empty
     if (currentChatId.isEmpty) {
       setCurrentChatId(chatId: chatId);
     }
-    // set loading
-    notifyListeners();
 
     // send message to chat
 
@@ -154,9 +157,12 @@ class ChatProvider extends ChangeNotifier {
     final content =
         await getMessageContent(message: message, isTextOnly: isTextOnly);
 
+    // get assistant message id
+    String assistantMessageId = const Uuid().v4();
+
     // creates a new MessageModel to represent the assistant's response
     MessageModel assistantMessage = userMessage.copyWith(
-      messageId: '',
+      messageId: assistantMessageId,
       message: StringBuffer(), // clear message
       role: Role.assistant,
       timeSent: DateTime.now(),

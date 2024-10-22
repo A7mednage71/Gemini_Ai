@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:gemini_ai/features/chat_screen/ui/provider/chat_provider.dart';
 import 'package:gemini_ai/home_screen.dart';
+import 'package:google_fonts/google_fonts.dart';
+import 'package:hive_flutter/hive_flutter.dart';
 import 'package:provider/provider.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
+  Hive.initFlutter();
   runApp(const GeminiAiApp());
 }
 
@@ -23,6 +26,7 @@ class GeminiAiApp extends StatelessWidget {
         theme: ThemeData(
           colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
           useMaterial3: true,
+          textTheme: GoogleFonts.ptSerifTextTheme(),
         ),
         home: const MyHomePage(),
       ),

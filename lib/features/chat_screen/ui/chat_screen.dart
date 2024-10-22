@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:gemini_ai/features/chat_screen/data/models/message_model.dart';
 import 'package:gemini_ai/features/chat_screen/ui/provider/chat_provider.dart';
+import 'package:gemini_ai/features/chat_screen/ui/widgets/assistant_message.dart';
 import 'package:gemini_ai/features/chat_screen/ui/widgets/chat_text_input_field.dart';
+import 'package:gemini_ai/features/chat_screen/ui/widgets/user_message.dart';
 import 'package:provider/provider.dart';
 
 class ChatScreen extends StatelessWidget {
@@ -24,10 +27,9 @@ class ChatScreen extends StatelessWidget {
                           itemCount: chatProvider.chatMessages.length,
                           itemBuilder: (context, index) {
                             var message = chatProvider.chatMessages[index];
-                            return ListTile(
-                              title: Text(message.message.toString()),
-                              subtitle: Text(message.timeSent.toString()),
-                            );
+                            return message.role == Role.user
+                                ? UserMessage(message: message)
+                                : AssistantMessage(message: message);
                           },
                         )
                       : const Center(child: Text("No Messages Yet")),

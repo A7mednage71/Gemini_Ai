@@ -46,6 +46,7 @@ dependencies:
   #A collection of loading indicators animated with flutter
   flutter_spinkit: ^5.2.1
   flutter_dotenv: ^5.2.1
+  google_fonts: ^6.2.1
 
 dev_dependencies:
   flutter_test:
