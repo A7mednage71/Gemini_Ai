@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_markdown/flutter_markdown.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:gemini_ai/features/chat_screen/data/models/message_model.dart';
 
 class AssistantMessage extends StatelessWidget {
@@ -23,16 +24,24 @@ class AssistantMessage extends StatelessWidget {
             bottomRight: Radius.circular(18),
           ),
         ),
-        child: MarkdownBody(
-          selectable: true,
-          data: message.message.toString(),
-          styleSheet: MarkdownStyleSheet(
-            p: const TextStyle(
-              fontSize: 17,
-              color: Colors.black,
-            ),
-          ),
-        ),
+        child: message.message.isEmpty
+            ? const SizedBox(
+                width: 50,
+                child: SpinKitThreeBounce(
+                  color: Colors.blueGrey,
+                  size: 20.0,
+                ),
+              )
+            : MarkdownBody(
+                selectable: true,
+                data: message.message.toString(),
+                styleSheet: MarkdownStyleSheet(
+                  p: const TextStyle(
+                    fontSize: 17,
+                    color: Colors.black,
+                  ),
+                ),
+              ),
       ),
     );
   }
