@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:gemini_ai/features/chat_history/ui/chat_history.dart';
 import 'package:gemini_ai/features/chat_screen/ui/chat_screen.dart';
+import 'package:gemini_ai/features/chat_screen/ui/provider/chat_provider.dart';
 import 'package:gemini_ai/features/profile_screen/ui/profile_screen.dart';
+import 'package:provider/provider.dart';
 
 class MyHomePage extends StatefulWidget {
   const MyHomePage({super.key});
@@ -24,41 +26,41 @@ class _MyHomePageState extends State<MyHomePage> {
   int currentIndex = 1;
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: PageView(
-        controller: pageController,
-        children: features,
-        onPageChanged: (value) {
-          setState(() {
-            currentIndex = value;
-          });
-        },
-      ),
-      bottomNavigationBar: BottomNavigationBar(
-        onTap: (index) {
-          setState(() {
-            currentIndex = index;
-          });
-          pageController.jumpToPage(index);
-        },
-        currentIndex: currentIndex,
-        elevation: 0,
-        selectedItemColor: Theme.of(context).colorScheme.primary,
-        items: const [
-          BottomNavigationBarItem(
-            icon: Icon(Icons.history),
-            label: 'History',
+    return Consumer<ChatProvider>(
+      builder: (context, chatprovider, _) {
+        return Scaffold(
+          body: PageView(
+            controller: chatprovider.pageController,
+            children: features,
+            onPageChanged: (value) {
+              chatprovider.setCurrentIndex(index: value);
+            },
           ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.chat),
-            label: 'Chat',
+          bottomNavigationBar: BottomNavigationBar(
+            onTap: (index) {
+              chatprovider.setCurrentIndex(index: index);
+              chatprovider.pageController.jumpToPage(index);
+            },
+            currentIndex: chatprovider.currentIndex,
+            elevation: 0,
+            selectedItemColor: Theme.of(context).colorScheme.primary,
+            items: const [
+              BottomNavigationBarItem(
+                icon: Icon(Icons.history),
+                label: 'History',
+              ),
+              BottomNavigationBarItem(
+                icon: Icon(Icons.chat),
+                label: 'Chat',
+              ),
+              BottomNavigationBarItem(
+                icon: Icon(Icons.person),
+                label: 'Profile',
+              ),
+            ],
           ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.person),
-            label: 'Profile',
-          ),
-        ],
-      ),
+        );
+      },
     );
   }
 }
