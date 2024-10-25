@@ -49,7 +49,6 @@ class _ChatScreenState extends State<ChatScreen> {
     return Scaffold(
         appBar: AppBar(
           title: const Text('Chat With Gemini'),
-          centerTitle: true,
         ),
         body: Consumer<ChatProvider>(builder: (context, chatProvider, child) {
           // Scroll to the bottom when new messages are added
