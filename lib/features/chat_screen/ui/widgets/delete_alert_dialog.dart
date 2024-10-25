@@ -1,20 +1,25 @@
 import 'package:flutter/material.dart';
-import 'package:gemini_ai/features/chat_screen/ui/provider/chat_provider.dart';
-import 'package:provider/provider.dart';
 
 class DeleteDialog extends StatelessWidget {
-  const DeleteDialog({super.key});
+  const DeleteDialog(
+      {super.key,
+      required this.title,
+      required this.subtitle,
+      this.onDeletePressed});
+  final String title;
+  final String subtitle;
 
+  final void Function()? onDeletePressed;
   @override
   Widget build(BuildContext context) {
     return AlertDialog(
-      title: const Text(
-        'Delete Images',
-        style: TextStyle(),
+      title: Text(
+        title,
+        style: const TextStyle(),
       ),
-      content: const Text(
-        'Are you sure you want to delete the images?',
-        style: TextStyle(fontSize: 18),
+      content: Text(
+        subtitle,
+        style: const TextStyle(fontSize: 18),
       ),
       actions: [
         TextButton(
@@ -24,12 +29,8 @@ class DeleteDialog extends StatelessWidget {
           },
         ),
         TextButton(
+          onPressed: onDeletePressed,
           child: const Text('Delete', style: TextStyle(color: Colors.red)),
-          onPressed: () {
-            Provider.of<ChatProvider>(context, listen: false)
-                .setChatImages(images: []);
-            Navigator.of(context).pop();
-          },
         ),
       ],
     );
