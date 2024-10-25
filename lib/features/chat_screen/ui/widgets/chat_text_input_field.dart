@@ -2,6 +2,7 @@ import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:gemini_ai/features/chat_screen/ui/provider/chat_provider.dart';
+import 'package:gemini_ai/features/chat_screen/ui/widgets/delete_alert_dialog.dart';
 import 'package:gemini_ai/features/chat_screen/ui/widgets/preview_picked_images.dart';
 
 class ChatTextInputField extends StatefulWidget {
@@ -74,7 +75,9 @@ class _ChatTextInputFieldState extends State<ChatTextInputField> {
                 onTap: () {
                   // if there are images in the list, clear them
                   if (hasImages) {
-                    widget.chatProvider.setChatImages(images: []);
+                    showDialog(
+                        context: context,
+                        builder: (context) => const DeleteDialog());
                   } else {
                     // else pick images
                     widget.chatProvider.pickImages();
