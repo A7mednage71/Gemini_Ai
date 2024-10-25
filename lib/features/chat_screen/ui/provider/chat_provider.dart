@@ -4,6 +4,7 @@ import 'dart:typed_data';
 
 import 'package:flutter/widgets.dart';
 import 'package:gemini_ai/core/constant/hive_boxes.dart';
+import 'package:gemini_ai/core/helpers/boxes_helper.dart';
 import 'package:gemini_ai/core/networking/api_constants.dart';
 import 'package:gemini_ai/features/chat_history/data/models/chat_history_model.dart';
 import 'package:gemini_ai/features/chat_screen/data/models/message_model.dart';
@@ -186,12 +187,49 @@ class ChatProvider extends ChangeNotifier {
           .write(event.text);
       notifyListeners();
     }, onDone: () async {
+      // save assistant message and user message to hive
+      await saveMessageToHive(
+          chatId: chatId,
+          assistantMessage: assistantMessage,
+          userMessage: userMessage);
       log("done chat session");
       setLoading(loadingState: false);
     }).onError((erro, stackTrace) {
       log(erro.toString());
       setLoading(loadingState: false);
     });
+  }
+
+  Future<void> saveMessageToHive(
+      {required String chatId,
+      required MessageModel assistantMessage,
+      required MessageModel userMessage}) async {
+    // open chat messages box
+    final chatMessagesBox =
+        await Hive.openBox('${HiveBoxes.chatMessagesBox}$chatId');
+    //  add user message and assistant message to chat messages box
+    await chatMessagesBox.put(userMessage.messageId, userMessage);
+    await chatMessagesBox.put(assistantMessage.messageId, assistantMessage);
+
+    // add user message and assistant message to chat history box
+    // if not exists already in chat history box else update it
+
+    final chatHistoryBox = BoxesHelper.getChatHistoryBox();
+
+    // create chat history model
+    ChatHistoryModel chatHistoryModel = ChatHistoryModel(
+      chatId: chatId,
+      prompt: userMessage.message.toString(),
+      response: assistantMessage.message.toString(),
+      imagesUrls: userMessage.imagesUrls,
+      timestamp: DateTime.now(),
+    );
+
+    // add chat history model to chat history box
+    await chatHistoryBox.put(chatId, chatHistoryModel);
+
+    // close chat messages box
+    await chatMessagesBox.close();
   }
 
   Future<Content> getMessageContent(
