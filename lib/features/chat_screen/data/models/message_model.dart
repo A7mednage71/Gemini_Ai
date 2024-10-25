@@ -20,7 +20,7 @@ class MessageModel {
     return {
       'messageId': messageId,
       'chatId': chatId,
-      'role': role.toString(),
+      'role': role.index,
       'message': message.toString(),
       'imagesUrls': imagesUrls,
       'timeSent': timeSent,
