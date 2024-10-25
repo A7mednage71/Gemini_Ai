@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_markdown/flutter_markdown.dart';
 import 'package:gemini_ai/features/chat_screen/data/models/message_model.dart';
+import 'package:gemini_ai/features/chat_screen/ui/widgets/preview_picked_images.dart';
 
 class UserMessage extends StatelessWidget {
   const UserMessage({super.key, required this.message});
@@ -23,15 +24,21 @@ class UserMessage extends StatelessWidget {
             bottomLeft: Radius.circular(18),
           ),
         ),
-        child: MarkdownBody(
-          selectable: true,
-          data: message.message.toString(),
-          styleSheet: MarkdownStyleSheet(
-            p: const TextStyle(
-              fontSize: 17,
-              color: Colors.black,
+        child: Column(
+          children: [
+            if (message.imagesUrls.isNotEmpty)
+              PreviewPickedImages(messageModel: message),
+            MarkdownBody(
+              selectable: true,
+              data: message.message.toString(),
+              styleSheet: MarkdownStyleSheet(
+                p: const TextStyle(
+                  fontSize: 17,
+                  color: Colors.black,
+                ),
+              ),
             ),
-          ),
+          ],
         ),
       ),
     );

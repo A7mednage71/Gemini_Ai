@@ -2,6 +2,7 @@ import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:gemini_ai/features/chat_screen/ui/provider/chat_provider.dart';
+import 'package:gemini_ai/features/chat_screen/ui/widgets/preview_picked_images.dart';
 
 class ChatTextInputField extends StatefulWidget {
   const ChatTextInputField({
@@ -35,7 +36,7 @@ class _ChatTextInputFieldState extends State<ChatTextInputField> {
     if (textController.text.isNotEmpty) {
       try {
         log("Message: ${textController.text}");
-        widget.chatProvider.sendMessageToGemini(
+        await widget.chatProvider.sendMessageToGemini(
           message: textController.text,
           isTextOnly: isTextOnly,
         );
@@ -43,6 +44,7 @@ class _ChatTextInputFieldState extends State<ChatTextInputField> {
         log("Error: $e");
       } finally {
         textController.clear();
+        widget.chatProvider.setChatImages(images: []);
         focusNode.unfocus();
       }
     }
@@ -50,6 +52,9 @@ class _ChatTextInputFieldState extends State<ChatTextInputField> {
 
   @override
   Widget build(BuildContext context) {
+    // check if there are images in the list or not
+    bool hasImages = widget.chatProvider.imagesFileList != null &&
+        widget.chatProvider.imagesFileList!.isNotEmpty;
     return Container(
       decoration: BoxDecoration(
         color: Theme.of(context).cardColor,
@@ -59,42 +64,56 @@ class _ChatTextInputFieldState extends State<ChatTextInputField> {
           width: 1,
         ),
       ),
-      child: Row(
+      child: Column(
         children: [
-          const SizedBox(width: 10),
-          InkWell(
-            onTap: () {},
-            child: const Icon(Icons.image),
-          ),
-          const SizedBox(width: 10),
-          Expanded(
-            child: TextField(
-              controller: textController,
-              focusNode: focusNode,
-              decoration: const InputDecoration(
-                hintText: 'Type Your Prompt..',
-                border: InputBorder.none,
+          if (hasImages) const PreviewPickedImages(),
+          Row(
+            children: [
+              const SizedBox(width: 10),
+              InkWell(
+                onTap: () {
+                  // if there are images in the list, clear them
+                  if (hasImages) {
+                    widget.chatProvider.setChatImages(images: []);
+                  } else {
+                    // else pick images
+                    widget.chatProvider.pickImages();
+                  }
+                },
+                child: Icon(hasImages ? Icons.delete_forever : Icons.image),
               ),
-            ),
-          ),
-          InkWell(
-            onTap: () async {
-              await sendMessage(isTextOnly: true);
-            },
-            child: Container(
-              padding: const EdgeInsets.all(8),
-              decoration: BoxDecoration(
-                color: Colors.deepPurple,
-                borderRadius: BorderRadius.circular(20),
+              const SizedBox(width: 10),
+              Expanded(
+                child: TextField(
+                  controller: textController,
+                  focusNode: focusNode,
+                  decoration: const InputDecoration(
+                    hintText: 'Type Your Prompt..',
+                    border: InputBorder.none,
+                  ),
+                ),
               ),
-              child: Center(
-                child: Transform.rotate(
-                    angle: -0.7,
-                    child: const Icon(Icons.send, color: Colors.white)),
+              InkWell(
+                onTap: () async {
+                  // send message
+                  await sendMessage(isTextOnly: hasImages ? false : true);
+                },
+                child: Container(
+                  padding: const EdgeInsets.all(8),
+                  decoration: BoxDecoration(
+                    color: Colors.deepPurple,
+                    borderRadius: BorderRadius.circular(20),
+                  ),
+                  child: Center(
+                    child: Transform.rotate(
+                        angle: -0.7,
+                        child: const Icon(Icons.send, color: Colors.white)),
+                  ),
+                ),
               ),
-            ),
+              const SizedBox(width: 5),
+            ],
           ),
-          const SizedBox(width: 5),
         ],
       ),
     );

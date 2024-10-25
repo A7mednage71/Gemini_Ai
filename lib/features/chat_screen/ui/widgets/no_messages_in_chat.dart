@@ -9,20 +9,22 @@ class NoChatMessages extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      mainAxisAlignment: MainAxisAlignment.center,
-      crossAxisAlignment: CrossAxisAlignment.center,
-      children: [
-        Lottie.asset(
-          AppAssets.geminiLottie,
-          width: 250,
-          height: 250,
-        ),
-        const Text(
-          "Let's get started !",
-          style: TextStyle(fontSize: 20),
-        ),
-      ],
+    return SingleChildScrollView(
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          Lottie.asset(
+            AppAssets.geminiLottie,
+            width: 250,
+            height: 250,
+          ),
+          const Text(
+            "Let's get started !",
+            style: TextStyle(fontSize: 20),
+          ),
+        ],
+      ),
     );
   }
 }

@@ -300,6 +300,16 @@ class ChatProvider extends ChangeNotifier {
     notifyListeners();
   }
 
+  // pick multiple image
+  Future<void> pickImages() async {
+    final List<XFile> images = await ImagePicker().pickMultiImage(
+      imageQuality: 95,
+      maxHeight: 800,
+      maxWidth: 800,
+    );
+    setChatImages(images: images);
+  }
+
   static Future<void> initHive() async {
     // find the right path to store the database
     var dir = await path.getApplicationDocumentsDirectory();
