@@ -77,3 +77,10 @@ class MessageModel {
 }
 
 enum Role { user, assistant }
+
+
+
+//The role.index is used in toMap because Role is likely an enum,
+// which cannot be directly stored in a map as is.
+// The .index property of an enum returns its position as an integer,
+// making it easier to store in a map, database, or JSON format.
