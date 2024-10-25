@@ -261,6 +261,38 @@ class ChatProvider extends ChangeNotifier {
     await chatMessagesBox.close();
   }
 
+  // delete chat messages from hive
+  Future<void> deletChatMessages({required String chatId}) async {
+    // 1. check if the box is open
+    if (!Hive.isBoxOpen('${HiveBoxes.chatMessagesBox}$chatId')) {
+      // open the box
+      await Hive.openBox('${HiveBoxes.chatMessagesBox}$chatId');
+
+      // delete all messages in the box
+      await Hive.box('${HiveBoxes.chatMessagesBox}$chatId').clear();
+
+      // close the box
+      await Hive.box('${HiveBoxes.chatMessagesBox}$chatId').close();
+    } else {
+      // delete all messages in the box
+      await Hive.box('${HiveBoxes.chatMessagesBox}$chatId').clear();
+
+      // close the box
+      await Hive.box('${HiveBoxes.chatMessagesBox}$chatId').close();
+    }
+
+    // get the current chatId, its its not empty
+    // we check if its the same as the chatId
+    // if its the same we set it to empty
+    if (currentChatId.isNotEmpty) {
+      if (currentChatId == chatId) {
+        setCurrentChatId(chatId: '');
+        _inChatMessages.clear();
+        notifyListeners();
+      }
+    }
+  }
+
   Future<Content> getMessageContent(
       {required String message, required bool isTextOnly}) async {
     if (isTextOnly) {
