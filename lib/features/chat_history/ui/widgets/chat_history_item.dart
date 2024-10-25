@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:gemini_ai/core/utils/delete_chat_history_dialog.dart';
 import 'package:gemini_ai/features/chat_history/data/models/chat_history_model.dart';
+import 'package:gemini_ai/features/chat_screen/ui/provider/chat_provider.dart';
+import 'package:provider/provider.dart';
 
 class ChatHistoryItem extends StatelessWidget {
   const ChatHistoryItem({
@@ -23,7 +25,17 @@ class ChatHistoryItem extends StatelessWidget {
         subtitle: Text(chatHistoryModel.response),
         trailing: IconButton(
           icon: const Icon(Icons.arrow_forward_ios),
-          onPressed: () {},
+          onPressed: () async {
+            //  prepare chat history model to send to
+            //chat screen and fill list of chat messages
+            final chatProvider =
+                Provider.of<ChatProvider>(context, listen: false);
+            await chatProvider.prepareChatRoom(
+                chatId: chatHistoryModel.chatId, isNew: false);
+            // to navigate to chat screen
+            chatProvider.setCurrentIndex(index: 1);
+            chatProvider.pageController.jumpToPage(1);
+          },
         ),
         onLongPress: () {
           // delete chat history

@@ -94,6 +94,27 @@ class ChatProvider extends ChangeNotifier {
     notifyListeners();
   }
 
+  // prepare chat Room
+  Future<void> prepareChatRoom(
+      {required String chatId, required bool isNew}) async {
+    if (!isNew) {
+      // if old get old messages from DB and
+      // add them to inChatMessages after clearing it
+      final messages = await getChatMessagesFromHive(chatId: chatId);
+      _inChatMessages.clear();
+      for (var message in messages) {
+        _inChatMessages.add(message);
+      }
+      // set current chat id to the old chat id
+      setCurrentChatId(chatId: chatId);
+    } else {
+      // if new create new chat
+      _inChatMessages.clear();
+      // set current chat id to  ''
+      setCurrentChatId(chatId: chatId);
+    }
+  }
+
   // send message to chat
   Future<void> sendMessageToGemini(
       {required String message, required bool isTextOnly}) async {
@@ -209,7 +230,8 @@ class ChatProvider extends ChangeNotifier {
         await Hive.openBox('${HiveBoxes.chatMessagesBox}$chatId');
     //  add user message and assistant message to chat messages box
     await chatMessagesBox.put(userMessage.messageId, userMessage.toMap());
-    await chatMessagesBox.put(assistantMessage.messageId, assistantMessage.toMap());
+    await chatMessagesBox.put(
+        assistantMessage.messageId, assistantMessage.toMap());
 
     // add user message and assistant message to chat history box
     // if not exists already in chat history box else update it
@@ -323,6 +345,7 @@ class ChatProvider extends ChangeNotifier {
   // set current index
   void setCurrentIndex({required int index}) {
     currentIndex = index;
+    log("Current Index: $currentIndex");
     notifyListeners();
   }
 
