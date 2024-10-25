@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:gemini_ai/core/utils/add_new_chat_dailog.dart';
 import 'package:gemini_ai/features/chat_screen/data/models/message_model.dart';
 import 'package:gemini_ai/features/chat_screen/ui/provider/chat_provider.dart';
 import 'package:gemini_ai/features/chat_screen/ui/widgets/assistant_message.dart';
@@ -49,6 +50,20 @@ class _ChatScreenState extends State<ChatScreen> {
     return Scaffold(
         appBar: AppBar(
           title: const Text('Chat With Gemini'),
+          actions: [
+            if (Provider.of<ChatProvider>(context).chatMessages.isNotEmpty)
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: CircleAvatar(
+                  child: IconButton(
+                    icon: const Icon(Icons.add),
+                    onPressed: () {
+                      addNewChatDialog(context);
+                    },
+                  ),
+                ),
+              )
+          ],
         ),
         body: Consumer<ChatProvider>(builder: (context, chatProvider, child) {
           // Scroll to the bottom when new messages are added
