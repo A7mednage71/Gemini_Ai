@@ -208,8 +208,8 @@ class ChatProvider extends ChangeNotifier {
     final chatMessagesBox =
         await Hive.openBox('${HiveBoxes.chatMessagesBox}$chatId');
     //  add user message and assistant message to chat messages box
-    await chatMessagesBox.put(userMessage.messageId, userMessage);
-    await chatMessagesBox.put(assistantMessage.messageId, assistantMessage);
+    await chatMessagesBox.put(userMessage.messageId, userMessage.toMap());
+    await chatMessagesBox.put(assistantMessage.messageId, assistantMessage.toMap());
 
     // add user message and assistant message to chat history box
     // if not exists already in chat history box else update it

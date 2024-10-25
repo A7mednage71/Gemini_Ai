@@ -72,17 +72,19 @@ class _ChatTextInputFieldState extends State<ChatTextInputField> {
             children: [
               const SizedBox(width: 10),
               InkWell(
-                onTap: () {
-                  // if there are images in the list, clear them
-                  if (hasImages) {
-                    showDialog(
-                        context: context,
-                        builder: (context) => const DeleteDialog());
-                  } else {
-                    // else pick images
-                    widget.chatProvider.pickImages();
-                  }
-                },
+                onTap: widget.chatProvider.isLoading
+                    ? null
+                    : () {
+                        // if there are images in the list, clear them
+                        if (hasImages) {
+                          showDialog(
+                              context: context,
+                              builder: (context) => const DeleteDialog());
+                        } else {
+                          // else pick images
+                          widget.chatProvider.pickImages();
+                        }
+                      },
                 child: Icon(hasImages ? Icons.delete_forever : Icons.image),
               ),
               const SizedBox(width: 10),
@@ -97,10 +99,12 @@ class _ChatTextInputFieldState extends State<ChatTextInputField> {
                 ),
               ),
               InkWell(
-                onTap: () async {
-                  // send message
-                  await sendMessage(isTextOnly: hasImages ? false : true);
-                },
+                onTap: widget.chatProvider.isLoading
+                    ? null
+                    : () async {
+                        // send message
+                        await sendMessage(isTextOnly: hasImages ? false : true);
+                      },
                 child: Container(
                   padding: const EdgeInsets.all(8),
                   decoration: BoxDecoration(
