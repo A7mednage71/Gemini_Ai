@@ -43,7 +43,7 @@ class _MyHomePageState extends State<MyHomePage> {
             },
             currentIndex: chatprovider.currentIndex,
             elevation: 0,
-            selectedItemColor: Theme.of(context).colorScheme.primary,
+            selectedItemColor: Colors.deepPurple,
             items: const [
               BottomNavigationBarItem(
                 icon: Icon(Icons.history),

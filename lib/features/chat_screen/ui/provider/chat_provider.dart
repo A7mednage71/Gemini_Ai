@@ -131,8 +131,14 @@ class ChatProvider extends ChangeNotifier {
     // get images urls
     List<String> imagesUrls = await getImagesUrls(isTextOnly: isTextOnly);
 
+    // open chat messages box
+    final chatMessagesBox =
+        await Hive.openBox('${HiveBoxes.chatMessagesBox}$chatId');
+
     // get message id
-    String messageId = const Uuid().v4();
+    String messageId = chatMessagesBox.keys.length.toString();
+    // get assistant message id
+    String assistantMessageId = (chatMessagesBox.keys.length + 1).toString();
 
     // create new message
     MessageModel newMessage = MessageModel(
@@ -160,6 +166,8 @@ class ChatProvider extends ChangeNotifier {
       chatId: chatId,
       isTextOnly: isTextOnly,
       message: message,
+      assistantMessageId: assistantMessageId,
+      chatMessagesBox: chatMessagesBox,
     );
   }
 
@@ -169,6 +177,8 @@ class ChatProvider extends ChangeNotifier {
     required String chatId,
     required bool isTextOnly,
     required MessageModel userMessage,
+    required String assistantMessageId,
+    required Box chatMessagesBox,
   }) async {
     // start a chat session using a generative model
     // send history to gemini
@@ -178,9 +188,6 @@ class ChatProvider extends ChangeNotifier {
     // get content
     final content =
         await getMessageContent(message: message, isTextOnly: isTextOnly);
-
-    // get assistant message id
-    String assistantMessageId = const Uuid().v4();
 
     // creates a new MessageModel to represent the assistant's response
     MessageModel assistantMessage = userMessage.copyWith(
@@ -210,9 +217,11 @@ class ChatProvider extends ChangeNotifier {
     }, onDone: () async {
       // save assistant message and user message to hive
       await saveMessageToHive(
-          chatId: chatId,
-          assistantMessage: assistantMessage,
-          userMessage: userMessage);
+        chatId: chatId,
+        assistantMessage: assistantMessage,
+        userMessage: userMessage,
+        chatMessagesBox: chatMessagesBox,
+      );
       log("done chat session");
       setLoading(loadingState: false);
     }).onError((erro, stackTrace) {
@@ -221,17 +230,15 @@ class ChatProvider extends ChangeNotifier {
     });
   }
 
-  Future<void> saveMessageToHive(
-      {required String chatId,
-      required MessageModel assistantMessage,
-      required MessageModel userMessage}) async {
-    // open chat messages box
-    final chatMessagesBox =
-        await Hive.openBox('${HiveBoxes.chatMessagesBox}$chatId');
+  Future<void> saveMessageToHive({
+    required String chatId,
+    required MessageModel assistantMessage,
+    required MessageModel userMessage,
+    required Box chatMessagesBox,
+  }) async {
     //  add user message and assistant message to chat messages box
-    await chatMessagesBox.put(userMessage.messageId, userMessage.toMap());
-    await chatMessagesBox.put(
-        assistantMessage.messageId, assistantMessage.toMap());
+    await chatMessagesBox.add(userMessage.toMap());
+    await chatMessagesBox.add(assistantMessage.toMap());
 
     // add user message and assistant message to chat history box
     // if not exists already in chat history box else update it
