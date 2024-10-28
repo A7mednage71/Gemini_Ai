@@ -83,12 +83,32 @@ class ChatProvider extends ChangeNotifier {
           GenerativeModel(
             model: setCurrentModel(model: 'gemini-1.0-pro'),
             apiKey: ApiConstants.apiKey,
+            generationConfig: GenerationConfig(
+              temperature: 0.4,
+              topK: 32,
+              topP: 1,
+              maxOutputTokens: 4096,
+            ),
+            safetySettings: [
+              SafetySetting(HarmCategory.harassment, HarmBlockThreshold.high),
+              SafetySetting(HarmCategory.hateSpeech, HarmBlockThreshold.high),
+            ],
           );
     } else {
       _generativeModel = _visionModel ??
           GenerativeModel(
             model: setCurrentModel(model: 'gemini-1.5-flash'),
             apiKey: ApiConstants.apiKey,
+            generationConfig: GenerationConfig(
+              temperature: 0.4,
+              topK: 32,
+              topP: 1,
+              maxOutputTokens: 4096,
+            ),
+            safetySettings: [
+              SafetySetting(HarmCategory.harassment, HarmBlockThreshold.high),
+              SafetySetting(HarmCategory.hateSpeech, HarmBlockThreshold.high),
+            ],
           );
     }
     notifyListeners();
