@@ -53,10 +53,10 @@ class _MyHomePageState extends State<MyHomePage> {
                 icon: Icon(Icons.chat),
                 label: 'Chat',
               ),
-              BottomNavigationBarItem(
-                icon: Icon(Icons.person),
-                label: 'Profile',
-              ),
+              // BottomNavigationBarItem(
+              //   icon: Icon(Icons.person),
+              //   label: 'Profile',
+              // ),
             ],
           ),
         );
