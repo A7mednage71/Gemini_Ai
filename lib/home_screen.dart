@@ -34,27 +34,24 @@ class _MyHomePageState extends State<MyHomePage> {
               chatprovider.setCurrentIndex(index: value);
             },
           ),
-          bottomNavigationBar: BottomNavigationBar(
-            onTap: (index) {
+          bottomNavigationBar: NavigationBar(
+            height: 70,
+            backgroundColor: Theme.of(context).scaffoldBackgroundColor,
+            onDestinationSelected: (index) {
               chatprovider.setCurrentIndex(index: index);
               chatprovider.pageController.jumpToPage(index);
             },
-            currentIndex: chatprovider.currentIndex,
+            selectedIndex: chatprovider.currentIndex,
             elevation: 0,
-            selectedItemColor: Colors.deepPurple,
-            items: const [
-              BottomNavigationBarItem(
+            destinations: const [
+              NavigationDestination(
                 icon: Icon(Icons.history),
                 label: 'History',
               ),
-              BottomNavigationBarItem(
+              NavigationDestination(
                 icon: Icon(Icons.chat),
                 label: 'Chat',
               ),
-              // BottomNavigationBarItem(
-              //   icon: Icon(Icons.person),
-              //   label: 'Profile',
-              // ),
             ],
           ),
         );

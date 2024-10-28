@@ -87,7 +87,6 @@ class _ChatScreenState extends State<ChatScreen> {
                       : const NoChatMessages(),
                 ),
                 ChatTextInputField(chatProvider: chatProvider),
-                const SizedBox(height: 10),
               ],
             ),
           );

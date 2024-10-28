@@ -402,7 +402,6 @@ class ChatProvider extends ChangeNotifier {
   // set current index
   void setCurrentIndex({required int index}) {
     currentIndex = index;
-    log("Current Index: $currentIndex");
     notifyListeners();
   }
 
