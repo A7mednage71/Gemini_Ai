@@ -17,7 +17,7 @@ class AssistantMessage extends StatelessWidget {
           maxWidth: MediaQuery.of(context).size.width * 0.7,
         ),
         decoration: BoxDecoration(
-          color: Theme.of(context).colorScheme.errorContainer,
+          color: Theme.of(context).colorScheme.surfaceContainerHighest,
           borderRadius: const BorderRadius.only(
             topLeft: Radius.circular(18),
             topRight: Radius.circular(18),
@@ -36,10 +36,7 @@ class AssistantMessage extends StatelessWidget {
                 selectable: true,
                 data: message.message.toString(),
                 styleSheet: MarkdownStyleSheet(
-                  p: const TextStyle(
-                    fontSize: 17,
-                    color: Colors.black,
-                  ),
+                  p: const TextStyle(fontSize: 17),
                 ),
               ),
       ),

@@ -34,7 +34,6 @@ class UserMessage extends StatelessWidget {
               styleSheet: MarkdownStyleSheet(
                 p: const TextStyle(
                   fontSize: 17,
-                  color: Colors.black,
                 ),
               ),
             ),
