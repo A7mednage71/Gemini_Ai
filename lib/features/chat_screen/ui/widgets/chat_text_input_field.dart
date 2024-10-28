@@ -60,7 +60,7 @@ class _ChatTextInputFieldState extends State<ChatTextInputField> {
     return Container(
       decoration: BoxDecoration(
         color: Theme.of(context).cardColor,
-        borderRadius: BorderRadius.circular(30).w,
+        borderRadius: BorderRadius.circular(25).w,
         border: Border.all(
           color: Colors.grey,
           width: 1.w,
@@ -108,7 +108,7 @@ class _ChatTextInputFieldState extends State<ChatTextInputField> {
                   padding: EdgeInsets.all(8.r),
                   decoration: BoxDecoration(
                     color: Colors.deepPurple,
-                    borderRadius: BorderRadius.circular(20),
+                    borderRadius: BorderRadius.circular(20).w,
                   ),
                   child: Center(
                     child: Transform.rotate(
@@ -117,7 +117,7 @@ class _ChatTextInputFieldState extends State<ChatTextInputField> {
                   ),
                 ),
               ),
-              SizedBox(width: 5.w),
+              SizedBox(width: 4.w),
             ],
           ),
         ],

@@ -14,6 +14,11 @@ class DeleteDialog extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return AlertDialog(
+      backgroundColor: Theme.of(context).scaffoldBackgroundColor,
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(20.r),
+        side: const BorderSide(color: Colors.grey),
+      ),
       title: Text(
         title,
         style: const TextStyle(fontWeight: FontWeight.w500),
