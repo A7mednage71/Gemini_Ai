@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:gemini_ai/core/helpers/boxes_helper.dart';
+import 'package:gemini_ai/core/theme/theme_provider.dart';
 import 'package:gemini_ai/features/chat_history/data/models/chat_history_model.dart';
 import 'package:gemini_ai/features/chat_history/ui/widgets/chat_history_item.dart';
 import 'package:gemini_ai/features/chat_history/ui/widgets/empty_chat_history.dart';
 import 'package:hive_flutter/hive_flutter.dart';
+import 'package:provider/provider.dart';
 
 class ChatHistory extends StatelessWidget {
   const ChatHistory({super.key});
@@ -16,11 +18,12 @@ class ChatHistory extends StatelessWidget {
         backgroundColor: Theme.of(context).appBarTheme.backgroundColor,
         actions: [
           IconButton(
-            onPressed: () {},
-            icon: const Icon(Icons.light_mode),
-            // icon: Icon(themeProvider.isDarkTheme()
-            //     ? Icons.light_mode
-            //     : Icons.dark_mode),
+            onPressed: () {
+              Provider.of<ThemeProvider>(context, listen: false).toggleTheme();
+            },
+            icon: Icon(Provider.of<ThemeProvider>(context).isDarkTheme
+                ? Icons.light_mode
+                : Icons.dark_mode),
           ),
         ],
       ),
