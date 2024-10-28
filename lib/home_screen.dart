@@ -37,7 +37,7 @@ class _MyHomePageState extends State<MyHomePage> {
           ),
           bottomNavigationBar: NavigationBar(
             height: 60.h,
-            backgroundColor: Theme.of(context).appBarTheme.backgroundColor,
+            backgroundColor: Theme.of(context).scaffoldBackgroundColor,
             onDestinationSelected: (index) {
               chatprovider.setCurrentIndex(index: index);
               chatprovider.pageController.jumpToPage(index);
