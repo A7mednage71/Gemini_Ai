@@ -8,8 +8,6 @@ import 'package:gemini_ai/core/helpers/boxes_helper.dart';
 import 'package:gemini_ai/core/networking/api_constants.dart';
 import 'package:gemini_ai/features/chat_history/data/models/chat_history_model.dart';
 import 'package:gemini_ai/features/chat_screen/data/models/message_model.dart';
-import 'package:gemini_ai/features/profile_screen/data/models/settings.dart';
-import 'package:gemini_ai/features/profile_screen/data/models/user_model.dart';
 import 'package:google_generative_ai/google_generative_ai.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:image_picker/image_picker.dart';
@@ -441,14 +439,6 @@ class ChatProvider extends ChangeNotifier {
     if (!Hive.isAdapterRegistered(0)) {
       Hive.registerAdapter(ChatHistoryModelAdapter());
       await Hive.openBox<ChatHistoryModel>(HiveBoxes.chatHistoryBox);
-    }
-    if (!Hive.isAdapterRegistered(1)) {
-      Hive.registerAdapter(UserModelAdapter());
-      await Hive.openBox<UserModel>(HiveBoxes.userBox);
-    }
-    if (!Hive.isAdapterRegistered(2)) {
-      Hive.registerAdapter(SettingsAdapter());
-      await Hive.openBox<Settings>(HiveBoxes.settingsBox);
     }
   }
 }

@@ -14,6 +14,15 @@ class ChatHistory extends StatelessWidget {
       appBar: AppBar(
         title: const Text('Chat History'),
         backgroundColor: Theme.of(context).appBarTheme.backgroundColor,
+        actions: [
+          IconButton(
+            onPressed: () {},
+            icon: const Icon(Icons.light_mode),
+            // icon: Icon(themeProvider.isDarkTheme()
+            //     ? Icons.light_mode
+            //     : Icons.dark_mode),
+          ),
+        ],
       ),
       body: ValueListenableBuilder(
         valueListenable: BoxesHelper.getChatHistoryBox().listenable(),

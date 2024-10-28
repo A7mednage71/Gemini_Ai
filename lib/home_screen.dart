@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:gemini_ai/features/chat_history/ui/chat_history.dart';
 import 'package:gemini_ai/features/chat_screen/ui/chat_screen.dart';
 import 'package:gemini_ai/features/chat_screen/ui/provider/chat_provider.dart';
-import 'package:gemini_ai/features/profile_screen/ui/profile_screen.dart';
 import 'package:provider/provider.dart';
 
 class MyHomePage extends StatefulWidget {
@@ -19,7 +18,6 @@ class _MyHomePageState extends State<MyHomePage> {
   List<Widget> features = [
     const ChatHistory(),
     const ChatScreen(),
-    const ProfileScreen()
   ];
 
   // current screen index
