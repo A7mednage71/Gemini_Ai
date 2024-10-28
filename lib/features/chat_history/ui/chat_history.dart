@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:gemini_ai/core/helpers/boxes_helper.dart';
 import 'package:gemini_ai/core/theme/theme_provider.dart';
 import 'package:gemini_ai/features/chat_history/data/models/chat_history_model.dart';
@@ -35,7 +36,7 @@ class ChatHistory extends StatelessWidget {
               : ListView.builder(
                   itemCount: chatHistoryBox.length,
                   padding:
-                      const EdgeInsets.only(left: 10, right: 10, bottom: 10),
+                      EdgeInsets.only(left: 10.w, right: 10.w, bottom: 10.h),
                   itemBuilder: (context, index) {
                     ChatHistoryModel chatHistoryModel =
                         chatHistoryBox.values.toList()[index];

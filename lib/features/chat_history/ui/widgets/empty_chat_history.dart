@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:gemini_ai/core/helpers/app_assets.dart';
 import 'package:gemini_ai/features/chat_screen/ui/provider/chat_provider.dart';
 import 'package:lottie/lottie.dart';
@@ -15,14 +16,14 @@ class EmptyChatHistory extends StatelessWidget {
         children: [
           Lottie.asset(
             AppAssets.emptyHistoryLottie,
-            height: 200,
+            height: 200.h,
             fit: BoxFit.cover,
           ),
-          const Text(
+          Text(
             "No chat history found !",
-            style: TextStyle(fontSize: 20),
+            style: TextStyle(fontSize: 20.sp),
           ),
-          const SizedBox(height: 10),
+          SizedBox(height: 10.h),
           TextButton(
             onPressed: () async {
               //  prepare chat history model to send to
@@ -34,9 +35,9 @@ class EmptyChatHistory extends StatelessWidget {
               chatProvider.setCurrentIndex(index: 1);
               chatProvider.pageController.jumpToPage(1);
             },
-            child: const Text(
+            child: Text(
               "Start new chat!",
-              style: TextStyle(fontSize: 18, color: Colors.blue),
+              style: TextStyle(fontSize: 18.sp, color: Colors.blue),
             ),
           )
         ],

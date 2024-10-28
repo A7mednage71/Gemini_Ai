@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class DeleteDialog extends StatelessWidget {
   const DeleteDialog(
@@ -15,11 +16,11 @@ class DeleteDialog extends StatelessWidget {
     return AlertDialog(
       title: Text(
         title,
-        style: const TextStyle(),
+        style: const TextStyle(fontWeight: FontWeight.w500),
       ),
       content: Text(
         subtitle,
-        style: const TextStyle(fontSize: 18),
+        style: TextStyle(fontSize: 17.sp),
       ),
       actions: [
         TextButton(

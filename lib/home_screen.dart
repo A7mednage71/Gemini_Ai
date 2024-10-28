@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:gemini_ai/features/chat_history/ui/chat_history.dart';
 import 'package:gemini_ai/features/chat_screen/ui/chat_screen.dart';
 import 'package:gemini_ai/features/chat_screen/ui/provider/chat_provider.dart';
@@ -35,8 +36,8 @@ class _MyHomePageState extends State<MyHomePage> {
             },
           ),
           bottomNavigationBar: NavigationBar(
-            height: 70,
-            backgroundColor: Theme.of(context).scaffoldBackgroundColor,
+            height: 60.h,
+            backgroundColor: Theme.of(context).appBarTheme.backgroundColor,
             onDestinationSelected: (index) {
               chatprovider.setCurrentIndex(index: index);
               chatprovider.pageController.jumpToPage(index);

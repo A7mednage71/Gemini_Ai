@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:gemini_ai/core/helpers/app_assets.dart';
 import 'package:lottie/lottie.dart';
 
@@ -16,12 +17,12 @@ class NoChatMessages extends StatelessWidget {
         children: [
           Lottie.asset(
             AppAssets.geminiLottie,
-            width: 250,
-            height: 250,
+            width: 250.w,
+            height: 250.h,
           ),
-          const Text(
+          Text(
             "Let's get started !",
-            style: TextStyle(fontSize: 20),
+            style: TextStyle(fontSize: 20.sp),
           ),
         ],
       ),

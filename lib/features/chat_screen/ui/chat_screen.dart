@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:gemini_ai/core/utils/add_new_chat_dailog.dart';
 import 'package:gemini_ai/features/chat_screen/data/models/message_model.dart';
 import 'package:gemini_ai/features/chat_screen/ui/provider/chat_provider.dart';
@@ -53,7 +54,7 @@ class _ChatScreenState extends State<ChatScreen> {
           actions: [
             if (Provider.of<ChatProvider>(context).chatMessages.isNotEmpty)
               Padding(
-                padding: const EdgeInsets.all(8.0),
+                padding: EdgeInsets.all(8.0.r),
                 child: CircleAvatar(
                   child: IconButton(
                     icon: const Icon(Icons.add),
@@ -69,7 +70,7 @@ class _ChatScreenState extends State<ChatScreen> {
           // Scroll to the bottom when new messages are added
           chatProvider.chatMessages.isNotEmpty ? _scrollToBottom() : null;
           return Padding(
-            padding: const EdgeInsets.all(8.0),
+            padding: EdgeInsets.all(8.0.r),
             child: Column(
               children: [
                 Expanded(
